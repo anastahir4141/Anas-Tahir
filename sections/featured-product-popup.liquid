@@ -1,0 +1,78 @@
+{{ 'featured-product-popup.css' | asset_url | stylesheet_tag }}
+
+<div class="product-grid">
+    <div class="container">
+        <h3 class="product-grid__heading">Tisso vison in the wild</h3>
+        <div class="product-grid__item-main">
+            {% for block in section.blocks %} 
+                {% assign product = block.settings.product %}
+                <div class="product-grid__item">
+                    <div class="product-grid__item__image">
+                        <img src="{{ product.featured_image | img_url: 'large' }}" width="100%" height="100%" alt="{{ product.title }}">
+                    </div>
+                    <button class="more-details" data-product-handle="{{ product.handle }}">
+                        <img src="{{ 'plus-icon.png' | asset_url }}" alt="PopUp Icon" width="100%" height="100%">
+                    </button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <a href="#" class="close-button">
+            <img src="{{ 'close.png' | asset_url }}" alt="Cross" width="auto" height="auto">
+        </a>
+        <div class="modal-body">
+            <div class="modal-body__info">
+                <div class="modal-body__info__image">
+                    <img id="popup-image" src="" alt="" width="100%" height="100%">
+                </div>
+                <div class="modal-body__info__content">
+                    <h2 class="modal-body__info__content__title" id="popup-product-title"></h2>
+                    <p class="modal-body__info__content__price" id="popup-product-price"></p>
+                    <p class="modal-body__info__desc" id="popup-product-description"></p>
+                </div>
+            </div>
+
+            <div class="modal-body__variants-info">
+                <div id="popup-colors"></div>
+                <div id="popup-sizes"></div>
+            </div>
+
+            <button id="add-to-cart-btn" class="btn btn-cart">Add to Cart
+                <span class="icon"><img src="{{ 'arrow-white.png' | asset_url }}" alt="Button Icon" width="100%" height="100%"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+{% schema %}
+    {
+        "name": "Products With Popup",
+        "class": "product-with-popup",
+        "settings": [
+        ],
+        "blocks": [
+            {
+                "type": "product",
+                "name": "Product",
+                "settings": [
+                    {
+                        "type": "product",
+                        "id": "product",
+                        "label": "Add Product"
+                    }
+                ]
+            }
+        ],
+        "presets": [
+            {
+                "name":"Products With Popup"
+            }
+        ]
+    }
+{% endschema %}
+
+<script src="{{ 'featured-product-popup.js' | asset_url }}" defer="defer"></script>
